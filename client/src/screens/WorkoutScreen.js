@@ -19,10 +19,13 @@ const Body = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
 
     const addExercise = (newExercise) => {
-      setSelectedExercises(currentExercises => [...currentExercises, newExercise]);
+      setSelectedExercises(currentExercises => [
+        ...currentExercises, 
+        { ...newExercise, sets: [{ id: '1', weight: '', reps: '' }] }
+      ]);
       setIsModalVisible(false); 
     };
-
+    
     const removeExercise = (index) => {
       setSelectedExercises(currentExercises => currentExercises.filter((_, i) => i !== index));
     };
@@ -30,13 +33,29 @@ const Body = () => {
     const addSet = (exerciseIndex) => {
       setSelectedExercises(currentExercises => currentExercises.map((exercise, index) => {
         if (index === exerciseIndex) {
-          const newSetId = String(exercise.sets.length + 1);
+          const sets = exercise.sets || [];
+          const newSetId = String(sets.length + 1);
           const newSet = { id: newSetId, weight: '', reps: '' };
-          return { ...exercise, sets: [...exercise.sets, newSet] };
+          return { ...exercise, sets: [...sets, newSet] };
         }
         return exercise;
       }));
     };
+      // Function to handle changes in the set inputs
+      const handleSetChange = (text, exerciseIndex, setIndex, field) => {
+      const updatedExercises = [...selectedExercises];
+      const updatedSet = { ...updatedExercises[exerciseIndex].sets[setIndex], [field]: text };
+      updatedExercises[exerciseIndex].sets[setIndex] = updatedSet;
+      setSelectedExercises(updatedExercises);
+    };
+  
+    // Function to remove a set
+      const removeSet = (exerciseIndex, setIndex) => {
+      const updatedExercises = [...selectedExercises];
+      updatedExercises[exerciseIndex].sets.splice(setIndex, 1);
+      setSelectedExercises(updatedExercises);
+    };
+    
     
     const renderExerciseCard = ({ item: exercise, index }) => {
       // A function to render each set item
@@ -63,24 +82,11 @@ const Body = () => {
         </View>
       );
     
-      // Function to handle changes in the set inputs
-      const handleSetChange = (text, exerciseIndex, setIndex, field) => {
-        const updatedExercises = [...selectedExercises];
-        const updatedSet = { ...updatedExercises[exerciseIndex].sets[setIndex], [field]: text };
-        updatedExercises[exerciseIndex].sets[setIndex] = updatedSet;
-        setSelectedExercises(updatedExercises);
-      };
-    
-      // Function to remove a set
-      const removeSet = (exerciseIndex, setIndex) => {
-        const updatedExercises = [...selectedExercises];
-        updatedExercises[exerciseIndex].sets.splice(setIndex, 1);
-        setSelectedExercises(updatedExercises);
-      };
+ 
     
       return (
         <View style={styles.card}>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}> 
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between'}}> 
             <Text style={styles.cardTitle}>{exercise.name}</Text>
             <TouchableOpacity onPress={() => removeExercise(index)}>
               <MaterialIcons name="close" size={22} color="#fff" />
@@ -171,7 +177,7 @@ const styles = StyleSheet.create({
       card: {
         
         width: 327,
-        height: 132,
+        
         backgroundColor: '#2c2f34',
         borderRadius: 24,
         padding: 16,
@@ -198,7 +204,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#515151', // Even lighter for the input
         borderRadius: 8,
         color: '#ffffff',
-        marginRight: 4,
+        marginLeft: 14,
         paddingHorizontal: 8,
         width: 50, // Adjust as needed
       },
