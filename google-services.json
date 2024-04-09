@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "780871217681",
+    "firebase_url": "https://fitnfeed-c30ba-default-rtdb.firebaseio.com",
+    "project_id": "fitnfeed-c30ba",
+    "storage_bucket": "fitnfeed-c30ba.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:780871217681:android:9d46484a7c97d821ccb7b0",
+        "android_client_info": {
+          "package_name": "com.panacea.fitnfeed"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCY0hBBgGl-UQCkjXRxSDR-wJb2JLdeRuc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
