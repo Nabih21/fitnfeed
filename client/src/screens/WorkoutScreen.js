@@ -27,44 +27,79 @@ const Body = () => {
       setSelectedExercises(currentExercises => currentExercises.filter((_, i) => i !== index));
     };
      
-    const addSet = (exerciseId) => {
-      setSelectedExercises(currentExercises => currentExercises.map(exercise => {
-        if (exercise.id === exerciseId) {
+    const addSet = (exerciseIndex) => {
+      setSelectedExercises(currentExercises => currentExercises.map((exercise, index) => {
+        if (index === exerciseIndex) {
           const newSetId = String(exercise.sets.length + 1);
-          const newSet = {id: newSetId, weight: '', reps: ''}
-          return{ ...exercise, sets: [...exercise.sets, newSet]};
+          const newSet = { id: newSetId, weight: '', reps: '' };
+          return { ...exercise, sets: [...exercise.sets, newSet] };
         }
         return exercise;
-      }))
-    }
- 
-    const renderExerciseCard = ({ item, index }) => (
-      <View style={styles.card}>
-        <View style={{flexDirection:'row', justifyContent:'space-between'}}> 
-
-          <Text style={styles.cardTitle}>{item.name}</Text>
-              <TouchableOpacity onPress={() => removeExercise(index)} >
-              <Text>Remove</Text>
-            </TouchableOpacity>
-       </View>
-      <View style={styles.setRow}>
-
-          <Text style={styles.setText}> {item.id} </Text>
-          <TextInput style={styles.setInput} keyboardType="numeric" defaultValue="0" />
+      }));
+    };
+    
+    const renderExerciseCard = ({ item: exercise, index }) => {
+      // A function to render each set item
+      const renderSetItem = ({ item: set, index: setIndex }) => (
+        <View style={styles.setRow} key={set.id}>
+          <Text style={styles.setText}>{setIndex + 1}</Text>
+          <TextInput 
+            style={styles.setInput} 
+            keyboardType="numeric" 
+            onChangeText={(text) => handleSetChange(text, index, setIndex, 'weight')} 
+            value={set.weight} 
+          />
           <Text style={styles.setText}>lbs</Text>
-          <TextInput style={styles.setInput} keyboardType="numeric" defaultValue="0" />
+          <TextInput 
+            style={styles.setInput} 
+            keyboardType="numeric" 
+            onChangeText={(text) => handleSetChange(text, index, setIndex, 'reps')} 
+            value={set.reps} 
+          />
           <Text style={styles.setText}>reps</Text>
-
-          <TouchableOpacity>
-            <MaterialIcons name="check-circle" size={26} color="green" />
+          <TouchableOpacity onPress={() => removeSet(index, setIndex)}>
+            <MaterialIcons name="delete" size={26} color="red" />
           </TouchableOpacity>
-      </View>
-      <TouchableOpacity style={styles.button} onPress={() => addSet(item.id)}>
+        </View>
+      );
+    
+      // Function to handle changes in the set inputs
+      const handleSetChange = (text, exerciseIndex, setIndex, field) => {
+        const updatedExercises = [...selectedExercises];
+        const updatedSet = { ...updatedExercises[exerciseIndex].sets[setIndex], [field]: text };
+        updatedExercises[exerciseIndex].sets[setIndex] = updatedSet;
+        setSelectedExercises(updatedExercises);
+      };
+    
+      // Function to remove a set
+      const removeSet = (exerciseIndex, setIndex) => {
+        const updatedExercises = [...selectedExercises];
+        updatedExercises[exerciseIndex].sets.splice(setIndex, 1);
+        setSelectedExercises(updatedExercises);
+      };
+    
+      return (
+        <View style={styles.card}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}> 
+            <Text style={styles.cardTitle}>{exercise.name}</Text>
+            <TouchableOpacity onPress={() => removeExercise(index)}>
+              <MaterialIcons name="close" size={22} color="#fff" />
+            </TouchableOpacity>
+          </View>
+          <FlatList
+            data={exercise.sets}
+            renderItem={renderSetItem}
+            keyExtractor={(set, setIndex) => setIndex.toString()}
+          />
+          <TouchableOpacity style={styles.button} onPress={() => addSet(index)}>
             <Text style={styles.buttonText}>Add Set</Text>
           </TouchableOpacity>
-      
-  </View>
-    );
+        </View>
+      );
+    };
+    
+ 
+    
     
 
     return (
