@@ -19,11 +19,19 @@ const styles = StyleSheet.create({
         // left: 0,
         // width: 400,
         // height: 64,
-        height: 60, // Adjust the height as needed
+        height: 60,
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#008877',
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: -7,
+        },
+        shadowOpacity: 0.5,
+        shadowRadius: 4,
+        elevation: 5,
 
       }
 });

@@ -114,7 +114,7 @@ const Body = () => {
        
         <ScrollView contentContainerStyle={styles.layout} style={styles.scrollView}
         >
-            <Text style={styles.textTitle}>Workout Screen</Text>
+            <Text style={styles.textTitle}>My Workout</Text>
 
             <FlatList 
               data={selectedExercises}
@@ -178,30 +178,46 @@ const styles = StyleSheet.create({
         
         width: 327,
         
-        backgroundColor: '#2c2f34',
+        backgroundColor: '#008877',
         borderRadius: 24,
         padding: 16,
         margin: 8, 
-        
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 7,
+        },
+        shadowOpacity: 0.5,
+        shadowRadius: 4,
+        elevation: 5,
       },
       cardTitle: {
         color: '#ffffff',
         fontSize: 18,
         //fontFamily: 'Source Sans Pro',
-        fontWeight: 600,
+        fontWeight: 'bold',
         lineHeight: 21,
+        
       },
       setRow: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        backgroundColor: '#414141', // Slightly lighter than card background
+        backgroundColor: '#17352b', // Slightly lighter than card background
         borderRadius: 10,
         padding: 8,
         marginVertical: 4,
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 7,
+        },
+        shadowOpacity: 0.3,
+        shadowRadius: 4,
+        elevation: 5,
       },
       setInput: {
-        backgroundColor: '#515151', // Even lighter for the input
+        backgroundColor: '#919090', 
         borderRadius: 8,
         color: '#ffffff',
         marginLeft: 14,
@@ -218,10 +234,19 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         padding: 6,
         width: 100,
+        margin: 5,
+        marginBottom: 0,
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 7,
+        },
+        shadowOpacity: 0.3,
+        shadowRadius: 4,
+        elevation: 5,
 
-        // Style your button
       },
       buttonText: {
-        // Style your button text
+        
       },
 })
