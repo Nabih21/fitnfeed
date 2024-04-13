@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, View, StatusBar, ScrollView, FlatList, TextInput, TouchableOpacity, Modal } from 'react-native'
+import { Pressable, StyleSheet, Text, View, StatusBar, ScrollView, FlatList, TextInput, TouchableOpacity, Modal, Alert } from 'react-native'
 import React, {useState} from 'react'
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -42,7 +42,7 @@ const Body = () => {
       }));
     };
       // Function to handle changes in the set inputs
-      const handleSetChange = (text, exerciseIndex, setIndex, field) => {
+    const handleSetChange = (text, exerciseIndex, setIndex, field) => {
       const updatedExercises = [...selectedExercises];
       const updatedSet = { ...updatedExercises[exerciseIndex].sets[setIndex], [field]: text };
       updatedExercises[exerciseIndex].sets[setIndex] = updatedSet;
@@ -50,13 +50,57 @@ const Body = () => {
     };
   
     // Function to remove a set
-      const removeSet = (exerciseIndex, setIndex) => {
+    const removeSet = (exerciseIndex, setIndex) => {
       const updatedExercises = [...selectedExercises];
       updatedExercises[exerciseIndex].sets.splice(setIndex, 1);
       setSelectedExercises(updatedExercises);
     };
     
-    
+    const handleEndWorkout = () => {
+      // try to save the workout in database
+      Alert.alert("End Workou",
+      "Are you sure you want to end this workout?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log('Canceled'),
+          style: 'cancel'
+        },
+        {
+          text:"Yes", 
+          onPress: () => { console.log('Workout ended and data saved:', selectedExercises);
+          setSelectedExercises([]);
+        }
+      }
+      ]);
+      
+    };
+
+    const handleDiscardWorkout = () => {
+      Alert.alert(
+        "Discard Workout", 
+        "Are you sure you want to discard this workout?", 
+        [
+          {
+            text: "No", 
+            onPress: () => console.log('Canceled'),
+            style: "cancel"
+          },
+          {
+            text: "Yes", 
+            onPress: () => {
+              console.log('Workout discarded');
+              setSelectedExercises([]);
+            }
+          }
+        ]
+      )
+      
+      
+      
+    };
+  
+
     const renderExerciseCard = ({ item: exercise, index }) => {
       // A function to render each set item
       const renderSetItem = ({ item: set, index: setIndex }) => (
@@ -120,13 +164,24 @@ const Body = () => {
               data={selectedExercises}
               renderItem={renderExerciseCard}
               keyExtractor={(item, index) => String(index)}
+              scrollEnabled={false}
             />
-            <Pressable
-
+            <TouchableOpacity
+              style={[ styles.button, styles.addButton]}
               onPress={() => setIsModalVisible(true)}>
-              <Text style={styles.textTitle}> Add exercise </Text>
+              <Text style={styles.buttonText}> Add exercise </Text>
 
-            </Pressable>
+            </TouchableOpacity>
+              <View style={styles.buttonContainer}>
+              <TouchableOpacity style={[styles.button, styles.discardButton]} onPress={handleDiscardWorkout}>
+                  <Text style={styles.buttonText}>Discard Workout</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={[styles.button, styles.endButton]} onPress={handleEndWorkout}>
+                  <Text style={styles.buttonText}>End Workout</Text>
+                </TouchableOpacity>
+               
+             </View>
+
 
             <Modal
             animationType='slide'
@@ -144,9 +199,15 @@ const Body = () => {
     );
 };
 const WorkoutScreen = () => {
+
+  const today = new Date();
+  const dateArr = today.toDateString().split(' ');
+  const date = dateArr.slice(1, 3).join(' ');
   return (
     <>
-    <Header />
+    <Header
+    title={`Today ${date}`}
+    />
     <Body />
     </>
   )
@@ -230,7 +291,7 @@ const styles = StyleSheet.create({
       },
       button: {
         alignItems: 'center',
-        backgroundColor: 'white',
+        backgroundColor: '#a0eec0',
         borderRadius: 8,
         padding: 6,
         width: 100,
@@ -246,7 +307,25 @@ const styles = StyleSheet.create({
         elevation: 5,
 
       },
-      buttonText: {
-        
+      buttonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        paddingBottom: 20,
       },
+      addButton: {
+       width: 315,
+       backgroundColor: '#a0eec0'
+      },
+      buttonText: {
+        color: '#17352b',
+        fontWeight: 'bold',
+      },
+      discardButton: {
+        backgroundColor: 'red',
+        width: 152.5,
+      },
+      endButton: {
+        backgroundColor: '#a0eec0',
+        width: 152.5,
+      }
 })

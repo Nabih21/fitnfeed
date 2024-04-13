@@ -9,7 +9,7 @@ const HomeScreen = () => {
     const nav = useNavigation();
   return (
     <>    
-    <Header />
+    <Header title="Home" />
     <SafeAreaView style={styles.layout}>
         <Text>HomeScreen</Text>
 

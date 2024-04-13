@@ -3,10 +3,12 @@ import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 
-const Header = () => {
+const Header = ({title}) => {
     return (
         <SafeAreaView style={styles.header}>
-            <Text style={styles.textTitle}>WorkoutScreen</Text>
+            <Text style={styles.headerText}> 
+            {title}
+                </Text>
             </SafeAreaView>
     );
 };
@@ -15,23 +17,26 @@ export default Header
 
 const styles = StyleSheet.create({
     header: {
-        // top: 0,
-        // left: 0,
-        // width: 400,
-        // height: 64,
-        height: 60,
         width: '100%',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#008877',
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 0,
-          height: -7,
-        },
-        shadowOpacity: 0.5,
-        shadowRadius: 4,
-        elevation: 5,
+   
+    backgroundColor: '#008877',
+    alignItems: 'center',
+    justifyContent: 'center',
+    //  iOS
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
+    zIndex: 10, 
+    //  Android
+    elevation: 4,
 
-      }
+
+      },
+      headerText: {
+        fontWeight: '600',
+        fontSize: 24,
+        color: 'white',
+      },
+
 });

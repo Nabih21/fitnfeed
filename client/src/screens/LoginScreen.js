@@ -59,6 +59,7 @@ const LoginScreen = () => {
   };
 
   return (
+    
     <SafeAreaView style={styles.layout}>
       <View>
         <Text style={styles.title}>Logo + Pancea</Text>
