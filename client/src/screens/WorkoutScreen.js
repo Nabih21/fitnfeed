@@ -203,6 +203,7 @@ const WorkoutScreen = () => {
   const today = new Date();
   const dateArr = today.toDateString().split(' ');
   const date = dateArr.slice(1, 3).join(' ');
+  //need to change that to choose calendar
   return (
     <>
     <Header

@@ -21,41 +21,7 @@ const LoginScreen = () => {
       Alert.alert(parseFirebaseError(error));
     }
 
-//     const user = {
-//       email: email,
-//       password: password,
-//     }
-//     axios.post("http://localhost:3001/auth/login", user).then(async (res) => {
-//       //console.log(res.data.message);
-//       const token = res.data.token;
-//       const message = res.data.message;
-//       if (token) {
-//         try {
-//           await AsyncStorage.setItem('authToken', token);
-//           nav.replace('Home');
-//         } catch (err) {
-//           console.error('AsyncStorage error:', err);
-//           // Handle storage error, perhaps notify the user or retry
-//         }
-//       } else {
-//         // Handle no token scenario (which should not occur if backend is consistent)
-//           if (message) {
-//             Alert.alert("Login issue", message);
-//           } else {
-//             Alert.alert("Login issue", "No token received and no message provided.");
-//           }
-//     }
-// }).catch((error) => {
-//     let errorMessage = "Invalid information"; // Default message
-//     if (error.response && error.response.data && error.response.data.message) {
-//         // Use the message from the backend if available
-//         errorMessage = error.response.data.message;
-//     } else {
-//         // Log and possibly handle network errors or other issues
-//         console.log('Error:', error);
-//     }
-//     Alert.alert("Login failed", errorMessage);
-//     });
+
   };
 
   return (

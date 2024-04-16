@@ -31,5 +31,10 @@ yarn-error.*
 # local env files
 .env*.local
 
+# main directory file
+fitnfeed-c30ba-firebase-adminsdk-d86vp-d2b3ae5a08.json
+uploadToFirestore.js
+nutrients_csvfile.csv
+csvToJsonFirestore.js
 # typescript
 *.tsbuildinfo

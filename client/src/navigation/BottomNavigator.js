@@ -5,7 +5,7 @@ import HomeScreen from '../screens/HomeScreen';
 import WorkoutScreen from '../screens/WorkoutScreen';
 import { StyleSheet } from 'react-native';
 import { Entypo, FontAwesome6, MaterialCommunityIcons } from '@expo/vector-icons';
-import MacrosScreen from '../screens/MacrosScreen';
+import MacrosScreen from '../screens/foodScreens/MacrosScreen';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
         // iOS
         shadowColor: '#000',
         shadowOffset: { width: 0, height: -1 },
-        shadowOpacity: 0.2,
+        shadowOpacity: 0.5,
         shadowRadius: 4,
         // Android
         elevation: 5,

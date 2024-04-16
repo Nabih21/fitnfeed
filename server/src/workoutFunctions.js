@@ -1,4 +1,4 @@
-// src/workoutServices.js
+
 import { firestore } from './firebaseConfig';
 import { collection, addDoc } from 'firebase/firestore';
 

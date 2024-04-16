@@ -1,4 +1,4 @@
-// ExercisesScreen.js
+
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, Modal, TouchableOpacity, Pressable, TextInput } from 'react-native';
 import { firestore } from '../../../firebase'; // Your Firebase config file
