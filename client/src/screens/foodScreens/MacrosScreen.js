@@ -28,6 +28,9 @@ const Body = () => {
   //hookstates for the different meals
   const [currentMeal, setCurrentMeal] = useState(null);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [removeModalVisible, setRemoveModalVisible] = useState(false);
+  const [currentMealFoods, setCurrentMealFoods] = useState([]);
+
 
 
 
@@ -108,8 +111,35 @@ const Body = () => {
   
 
 
-
+  const removeFoodItem = (mealName, index) => {
+    const updatedMealFoods = [...currentMealFoods];
+    updatedMealFoods.splice(index, 1); // Remove the food item at the given index
   
+    // Update the respective meal's state based on mealName
+    const updatedCalories = updatedMealFoods.reduce((acc, item) => acc + (isNaN(Number(item.Calories)) ? 0 : Number(item.Calories)), 0);
+    switch(mealName) {
+      case 'Breakfast':
+        setBreakfast(['Breakfast', updatedMealFoods, updatedCalories]);
+        break;
+      case 'Lunch':
+        setLunch(['Lunch', updatedMealFoods, updatedCalories]);
+        break;
+      case 'Dinner':
+        setDinner(['Dinner', updatedMealFoods, updatedCalories]);
+        break;
+      case 'Snacks':
+        setSnacks(['Snacks', updatedMealFoods, updatedCalories]);
+        break;
+    }
+    setCurrentMealFoods(updatedMealFoods); // Update the foods displayed in the modal
+  };
+  
+  
+  // const renderRemoveItemsModal = () => {
+  //   return (
+      
+  //   );
+  // };
   
 
   const renderCard = () => {
@@ -119,7 +149,11 @@ const Body = () => {
     
             {cards.map((card, index) => (
               <TouchableOpacity key={index} style={styles.card} 
-                onLongPress={() => confirmRemoveFoodItem(card[0], index)}
+                onLongPress={() => {
+                  setCurrentMeal(card);
+                  setCurrentMealFoods(card[1]);
+                  setRemoveModalVisible(true);
+                }}
               >
                 <Text style={styles.cardTitle}> {card[0]} </Text>
                 <View style={styles.setRow}>
@@ -177,6 +211,36 @@ const Body = () => {
                 currentMeal={currentMeal}
               />
             </Modal>
+            <Modal
+        visible={removeModalVisible}
+        onRequestClose={() => setRemoveModalVisible(false)}
+        animationType="slide"
+        presentationStyle="overFullScreen"
+        transparent={true}
+      >
+        <View style={styles.overlay} >
+        <View style={styles.modalView}>
+          <Text style={styles.modalTitle}>Edit {currentMeal && currentMeal[0]} Items</Text>
+          {currentMealFoods.map((food, index) => (
+            <View key={index} style={styles.foodItemContainer}>
+              <Text style={styles.foodName}>{food.Food}</Text>
+              <TouchableOpacity
+                style={styles.removeButton}
+                onPress={() => removeFoodItem(currentMeal[0], index)}
+              >
+                <Text style={styles.removeButtonText}>Remove</Text>
+              </TouchableOpacity>
+            </View>
+          ))}
+          <TouchableOpacity
+            style={styles.closeButton}
+            onPress={() => setRemoveModalVisible(false)}
+          >
+            <Text style={styles.closeButtonText}>Close</Text>
+          </TouchableOpacity>
+        </View>
+        </View>
+      </Modal>
             
 
                 </ScrollView>
@@ -320,5 +384,63 @@ const styles = StyleSheet.create({
         width: 152.5,
       },
       
+
       
-})
+      modalView: {
+        marginTop: '50%', // Adjusts the modal to be vertically centered
+        alignSelf: 'center', // Centers the modal horizontally in the view
+        backgroundColor: 'white',
+        borderRadius: 20,
+        padding: 20,
+        width: '80%', // Sets a specific width to make it look like a card
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+        transform: [{ translateY: -100 }], // This moves the modal up by half of its own height to center it
+      },
+      foodItemContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        width: '100%',
+        marginBottom: 10
+      },
+      foodName: {
+        fontSize: 16
+      },
+      removeButton: {
+        backgroundColor: 'red',
+        padding: 10,
+        borderRadius: 5
+      },
+      removeButtonText: {
+        color: 'white',
+        fontSize: 16
+      },
+      closeButton: {
+        marginTop: 20,
+        backgroundColor: '#2196F3',
+        padding: 10,
+        borderRadius: 5
+      },
+      closeButtonText: {
+        color: 'white',
+        fontSize: 16
+      },
+      overlay: {
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: 'rgba(0,0,0,0.5)', // Semi-transparent black background
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      
+});
