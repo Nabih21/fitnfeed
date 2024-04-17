@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Image, Button, Pressable } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import welcomeMeme from '../../../assets/images/welcome_meme.jpeg'
+import logo from '../../../assets/images/logo_1.png'
 import { useNavigation } from '@react-navigation/native'
 
 const WelcomeScreen = () => {
@@ -10,13 +10,13 @@ const WelcomeScreen = () => {
 
   return (
     <SafeAreaView style={styles.layout}>
-        <View  >
+        {/* <View  >
         <Text style={styles.title}>Welcome Screen</Text>
-        </View>
+        </View> */}
 
         <View style={styles.containerImage} >
             <Image 
-            source={welcomeMeme}
+            source={logo}
             style={styles.image}
              /> 
         </View>
@@ -26,7 +26,7 @@ const WelcomeScreen = () => {
             style={styles.button}
             >
               
-            <Text style={styles.buttonText}> Sign up </Text>
+            <Text style={styles.buttonText}> Register </Text>
                       </Pressable>
         
           <Pressable
@@ -34,14 +34,14 @@ const WelcomeScreen = () => {
             style={[styles.button, {backgroundColor: 'white', borderWidth: 1, borderColor: 'green'}]}
             >
 
-            <Text style={[styles.buttonText, { color: 'green'}]}> Sign in</Text>
+            <Text style={[styles.buttonText, { color: '#008877'}]}> Sign in</Text>
                       </Pressable>
                       <Pressable
             onPress={() => nav.navigate("MainApp")}
             style={[styles.button, {backgroundColor: 'white', borderWidth: 1, borderColor: 'green'}]}
             >
 
-            <Text style={[styles.buttonText, { color: 'green'}]}> Home</Text>
+            <Text style={[styles.buttonText, { color: '#008877'}]}> Home</Text>
                       </Pressable>
          </View>
     </SafeAreaView>    
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
 
     layout: {
         flex: 1,
-        backgroundColor: 'white',
+        backgroundColor: '#17352b',
         alignItems: 'center',
         paddingTop: 30,
         // padding: 24
@@ -64,20 +64,21 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         textAlign: 'center',
+        color: 'white',
       }, 
       containerImage: {
         justifyContent: 'center',
         alignItems: 'center',
-        shadowColor: "#000",
-        shadowOffset: {
-          width: 0,
-          height: 4,
-        },
-        shadowOpacity: 0.3,
-        shadowRadius: 5,
-        backgroundColor: 'white', // Shadow needs a color to stand out
+        // shadowColor: "#000",
+        // shadowOffset: {
+        //   width: 0,
+        //   height: 4,
+        // },
+        // shadowOpacity: 0.3,
+        // shadowRadius: 5,
+        // backgroundColor: '#17352b', // Shadow needs a color to stand out
         // Add padding to prevent the shadow from being clipped, kinda opitonal
-        padding: 0,
+        paddingRight: 10,
         borderRadius:12,
         margin: 10,
       },
@@ -86,7 +87,7 @@ const styles = StyleSheet.create({
         height: 400,
         borderWidth: 0,
         borderRadius: 12,
-        borderColor: '#E7E3EB',
+        //borderColor: '#E7E3EB',
         
       },
 
@@ -101,7 +102,7 @@ const styles = StyleSheet.create({
         margin: 12, 
         width: 300,
         height: 45,
-        backgroundColor: 'green',
+        backgroundColor: '#008877',
         borderRadius: 8,
 
 

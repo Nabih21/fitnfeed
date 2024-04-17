@@ -76,7 +76,7 @@ const Body = () => {
     
     const handleEndWorkout = () => {
       // try to save the workout in database
-      Alert.alert("End Workou",
+      Alert.alert("End Workout",
       "Are you sure you want to end this workout?",
       [
         {

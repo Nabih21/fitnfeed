@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import firebase from '../../../firebase';
 import { registerUser } from '../../../server/src/auth';
 import parseFirebaseError from '../components/parseFirebaseError';
+import logo_1 from '../../../assets/images/logo_1.png';
 
 const RegisterScreen = () => {
     const [email, setEmail] = useState('');
@@ -55,19 +56,25 @@ const RegisterScreen = () => {
 
     return (
         <SafeAreaView style={styles.layout}>
-            <View>
-                <Text style={styles.title}>Logo + Pancea</Text>
+
+            <View style={styles.containerImage} >
+                <Image 
+                source={logo_1}
+                style={styles.image}
+                />
             </View>
 
-            <View style={{ marginTop: 170 }}>
+
+            <View style={{ marginTop: 0 }}>
                 <Text style={styles.title}>Register here </Text>
             </View>
             <KeyboardAvoidingView>
                 <View>
                     <View style={styles.textInputView}>
-                        <MaterialIcons name="email" size={24} color="gray" style={{ marginLeft: 8 }} />
+                        <MaterialIcons name="email" size={24} color="#4B6059" style={{ marginLeft: 8 }} />
                         <TextInput
                             placeholder='Enter your email'
+                            placeholderTextColor={'#4B6059'}
                             style={styles.textInput}
                             value={email}
                             onChangeText={(text) => setEmail(text)}
@@ -76,12 +83,13 @@ const RegisterScreen = () => {
                 </View>
                 <View>
                     <View style={styles.textInputView}>
-                        <AntDesign name="lock1" size={24} color="gray" style={{ marginLeft: 8 }} />
+                        <AntDesign name="lock1" size={24} color="#4B6059" style={{ marginLeft: 8 }} />
                         <TextInput
                             secureTextEntry={true}
                             value={password}
                             onChangeText={(text) => setPassword(text)}
                             placeholder='Enter your Password'
+                            placeholderTextColor={'#4B6059'}
                             style={styles.textInput} 
                             />
                     </View>
@@ -121,14 +129,15 @@ const styles = StyleSheet.create({
 
     layout: {
         flex: 1,
-        backgroundColor: 'white',
+        backgroundColor: '#17352b',
         alignItems: 'center',
     },
     title: {
         margin: 24,
-        fontSize: 18,
+        fontSize: 24,
         fontWeight: 'bold',
         textAlign: 'center',
+        color: 'white',
     },
     textInputView: {
         flexDirection: 'row',
@@ -160,7 +169,7 @@ const styles = StyleSheet.create({
         margin: 12, 
         width: 300,
         height: 45,
-        backgroundColor: 'green',
+        backgroundColor: '#008877',
         borderRadius: 8,
 
 
@@ -175,18 +184,41 @@ const styles = StyleSheet.create({
       },
     regularText: {
         fontSize: 18,
-        color: 'black',
+        color: 'white',
         fontWeight: '500',
         textAlign: 'center',
     },
 
     hyperLinkText: {
         fontSize: 18,
-        color: 'green',
+        color: '#008877',
         fontWeight: '500',
         textDecorationLine: 'underline',
         textAlign: 'center',
 
-    }
-
+    },
+    image: {
+        width: 300,
+        height: 300,
+        borderWidth: 0,
+        borderRadius: 12,
+        //borderColor: '#E7E3EB',
+        
+      },
+      containerImage: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        // shadowColor: "#000",
+        // shadowOffset: {
+        //   width: 0,
+        //   height: 4,
+        // },
+        // shadowOpacity: 0.3,
+        // shadowRadius: 5,
+        // backgroundColor: '#17352b', // Shadow needs a color to stand out
+        // Add padding to prevent the shadow from being clipped, kinda opitonal
+        paddingRight: 10,
+        borderRadius:12,
+        margin: 0,
+      },
 });

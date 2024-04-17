@@ -5,6 +5,11 @@ import { CircularProgress } from 'react-native-circular-progress';
 const MacroProgressBars = ({ macros }) => {
   // calculate the width based on the ratio of current to goal
   const getProgressBarWidth = (current, goal) => (current / goal) * 100 + '%';
+  const macroColors = {
+    Carbs: '#c274ff',
+    Protein: '#ff748d',
+    Fat: '#fbe738',
+  };
 
   return (
     <View style={styles.progressBarContainer}>
@@ -12,7 +17,7 @@ const MacroProgressBars = ({ macros }) => {
         <View key={key} style={styles.progressSubBarContainer}>
           <Text style={styles.macroLabel}>{key}</Text>
           <View style={styles.progressBarBackground}>
-            <View style={[styles.progressBarFill, { width: getProgressBarWidth(current, goal) }]} />
+            <View style={[styles.progressBarFill, { width: getProgressBarWidth(current, goal), backgroundColor: macroColors[key] }]} />
           </View>
           <Text style={styles.macroValues}>{`${current}/${goal}g`}</Text>
 
