@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     height: 40,
     width: '90%',
-    fontColor: '#17352b',
+    color: '#17352b',
   },
 
   closeButton: {

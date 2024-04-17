@@ -15,8 +15,8 @@ const MacroProgressBarsHome = ({ macros }) => {
   return (
     <View>
       {Object.entries(macros).map(([key, { current, goal }]) => (
-        <View>
-        <View key={key} style={styles.progressBarContainer}>
+        <View  key={key}>
+        <View style={styles.progressBarContainer}>
           <Text style={styles.macroLabel}>{key}</Text>
           <Text style={styles.macroValues}>{`${current}/${goal}`}</Text>
          

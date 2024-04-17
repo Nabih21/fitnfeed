@@ -175,7 +175,7 @@ const Body = () => {
                   <View>
                    
                     { card[1].length > 0 ? card[1].map((food,index) => 
-                    (   <Text style={styles.setText}> {food.Food} </Text>))
+                    (   <Text key={index} style={styles.setText}> {food.Food} </Text>))
                     
                     : (<Text style={styles.setText} > No food yet </Text> )}
                   

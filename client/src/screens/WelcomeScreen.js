@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, Button, Pressable } from 'react-native'
+import { StyleSheet, Text, View, Image, Button, Pressable, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import logo from '../../../assets/images/logo_1.png'
@@ -21,21 +21,21 @@ const WelcomeScreen = () => {
              /> 
         </View>
         <View style={styles.buttonContainer}>
-        <Pressable
+        <TouchableOpacity
             onPress={() => nav.navigate("Register")}
             style={styles.button}
             >
               
             <Text style={styles.buttonText}> Register </Text>
-                      </Pressable>
+                      </TouchableOpacity>
         
-          <Pressable
+          <TouchableOpacity
             onPress={() => nav.navigate("Login")}
-            style={[styles.button, {backgroundColor: 'white', borderWidth: 1, borderColor: 'green'}]}
+            style={[styles.button, {backgroundColor: 'white'}]}
             >
 
             <Text style={[styles.buttonText, { color: '#008877'}]}> Sign in</Text>
-                      </Pressable>
+                      </TouchableOpacity>
                       <Pressable
             onPress={() => nav.navigate("MainApp")}
             style={[styles.button, {backgroundColor: 'white', borderWidth: 1, borderColor: 'green'}]}
@@ -104,7 +104,14 @@ const styles = StyleSheet.create({
         height: 45,
         backgroundColor: '#008877',
         borderRadius: 8,
-
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 7,
+        },
+        shadowOpacity: 0.3,
+        shadowRadius: 4,
+        elevation: 5,
 
       },
       buttonText: {

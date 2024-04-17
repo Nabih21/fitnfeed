@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, Image, KeyboardAvoidingView, TextInput, Pressable, Alert } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, Image, KeyboardAvoidingView, TextInput, Pressable, Alert,TouchableOpacity, ActivityIndicator } from 'react-native'
 import React, { useState } from 'react'
 import { MaterialIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
@@ -12,14 +12,18 @@ const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const nav = useNavigation();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleLogin =  async() => {
+    setIsLoading(true);
     try {
       await loginUser(email, password);
-      console.log("Login successful!");
+      //console.log("Login successful!");
+      setIsLoading(false);
       Alert.alert("Login successful!");
       nav.navigate('MainApp');
     } catch (error) {
+      setIsLoading(false);
       Alert.alert(parseFirebaseError(error));
     }
 
@@ -45,11 +49,15 @@ const LoginScreen = () => {
           <View style={styles.textInputView}>
             <MaterialIcons name="email" size={24} color="#4B6059" style={{ marginLeft: 8 }} />
             <TextInput
+              value={email}
               placeholder='Enter your email'
               placeholderTextColor={'#4B6059'}
               style={styles.textInput}
-              value={email}
+              autoComplete='off'
+              autoCorrect={false}
               onChangeText={(text) => setEmail(text)}
+              secureTextEntry={false}
+              keyboardType='email-address'
             />
           </View>
         </View>
@@ -67,22 +75,23 @@ const LoginScreen = () => {
         </View>
 
         <View style={styles.buttonContainer}>
-          <Pressable
+           { isLoading ? <ActivityIndicator  size="large" color="white"/> :
+          <TouchableOpacity
             onPress={handleLogin}
             style={styles.button}
           >
             <Text style={styles.buttonText}> Sign In </Text>
-          </Pressable>
+          </TouchableOpacity>}
         </View>
 
         <View style={{ marginTop: 50 }}>
 
           <Text style={styles.regularText}> Don't have an account yet? </Text>
-          <Pressable
+          <TouchableOpacity
             onPress={() => nav.navigate("Register")}
           >
             <Text style={styles.hyperLinkText}> Sign up </Text>
-          </Pressable>
+          </TouchableOpacity>
         </View>
 
       </KeyboardAvoidingView>
@@ -114,6 +123,14 @@ const styles = StyleSheet.create({
       paddingVertical: 5,
       backgroundColor: '#D0D0D0',
       borderRadius: 12,
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 0,
+        height: 7,
+      },
+      shadowOpacity: 0.3,
+      shadowRadius: 4,
+      elevation: 5,
 
   },
   textInput: {
@@ -138,6 +155,14 @@ const styles = StyleSheet.create({
       height: 45,
       backgroundColor: '#008877',
       borderRadius: 8,
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 0,
+        height: 7,
+      },
+      shadowOpacity: 0.3,
+      shadowRadius: 4,
+      elevation: 5,
 
 
     },
@@ -166,7 +191,7 @@ const styles = StyleSheet.create({
   },
   image: {
       width: 300,
-      height: 300,
+      height: 240,
       borderWidth: 0,
       borderRadius: 12,
       //borderColor: '#E7E3EB',

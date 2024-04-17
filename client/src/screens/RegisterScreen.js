@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, Image, KeyboardAvoidingView, TextInput, Pressable, Alert, ActivityIndicator } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, Image, KeyboardAvoidingView, TextInput, Pressable, Alert, ActivityIndicator, TouchableOpacity, ScrollView } from 'react-native'
 import React, { useState } from 'react'
 import { MaterialIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
@@ -21,7 +21,9 @@ const RegisterScreen = () => {
         try {
             await registerUser(email, password);
             setIsLoading(false);
-            console.log("Registration successful!");
+            //console.log("Registration successful!");
+            Alert.alert("Registration successful!");
+            navigation.navigate('Login');
           } catch (error) {
             setIsLoading(false);
             Alert.alert(parseFirebaseError(error));
@@ -56,7 +58,7 @@ const RegisterScreen = () => {
 
     return (
         <SafeAreaView style={styles.layout}>
-
+            <ScrollView>
             <View style={styles.containerImage} >
                 <Image 
                 source={logo_1}
@@ -100,25 +102,26 @@ const RegisterScreen = () => {
             </KeyboardAvoidingView>
             <View style={ styles.buttonContainer }>
                     { isLoading ? 
-                    <ActivityIndicator  size="large" color="#0000ff"/> 
+                    <ActivityIndicator  size="large" color="white"/> 
             
                     :
-                    <Pressable
+                    <TouchableOpacity
                         onPress={handleRegister}
                         style={styles.button}
                     >
                         <Text style={styles.buttonText} > Register </Text>
-                    </Pressable>}
+                    </TouchableOpacity>}
                 </View>
                 <View style={{ marginTop: 50 }}>
 
                     <Text style={styles.regularText}> Already have an account? </Text>
-                    <Pressable
+                    <TouchableOpacity
                         onPress={() => navigation.navigate("Login")}
                     >
                         <Text style={styles.hyperLinkText}> Sign in to your account </Text>
-                    </Pressable>
+                    </TouchableOpacity>
                 </View>
+                </ScrollView>
         </SafeAreaView>
     )
 }
@@ -147,6 +150,14 @@ const styles = StyleSheet.create({
         paddingVertical: 5,
         backgroundColor: '#D0D0D0',
         borderRadius: 12,
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 7,
+        },
+        shadowOpacity: 0.3,
+        shadowRadius: 4,
+        elevation: 5,
 
     },
     textInput: {
@@ -171,6 +182,14 @@ const styles = StyleSheet.create({
         height: 45,
         backgroundColor: '#008877',
         borderRadius: 8,
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 7,
+        },
+        shadowOpacity: 0.3,
+        shadowRadius: 4,
+        elevation: 5,
 
 
       },
@@ -199,7 +218,7 @@ const styles = StyleSheet.create({
     },
     image: {
         width: 300,
-        height: 300,
+        height: 240,
         borderWidth: 0,
         borderRadius: 12,
         //borderColor: '#E7E3EB',

@@ -177,7 +177,7 @@ const Body = () => {
         <ScrollView contentContainerStyle={styles.layout} style={styles.scrollView}
         >
     
-            <DatePickerComponent date={selectedDate} onAdjustDate={adjustDate} onChange={handleDateChange} />
+            <DatePickerComponent date={selectedDate} onAdjustDate={adjustDate} onDateChange={handleDateChange} />
 
             <FlatList 
               data={selectedExercises}

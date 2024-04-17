@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, FlatList, Modal, TouchableOpacity, Pressable, TextInput } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Modal, TouchableOpacity, Pressable, TextInput, ActivityIndicator } from 'react-native';
 import { firestore } from '../../../../firebase'; // Your Firebase config file
 import { collection, getDocs } from 'firebase/firestore';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -11,6 +11,7 @@ import Header from '../../components/Header';
 
 
 const SearchFoodScreen = ({onAddFoodItem, currentMeal}) => {
+
  
 
     const [food, setFood] = useState([]);
@@ -20,6 +21,7 @@ const SearchFoodScreen = ({onAddFoodItem, currentMeal}) => {
 
     const filteredFood = food.filter(food =>
         food.Food.toLowerCase().includes(searchQuery.toLowerCase())
+
       );
 
       const handleAddFoodItem = (selectedFood) => {
@@ -31,13 +33,16 @@ const SearchFoodScreen = ({onAddFoodItem, currentMeal}) => {
       };
     
     useEffect(() => {
+      
         const fetchFood = async () => {
+           
         const foodCollection = collection(firestore, 'Food');
         const foodSnap = await getDocs(foodCollection);
         const foodList = foodSnap.docs.map(doc => doc.data());
         setFood(foodList);
+      
         };
-    
+    //setIsLoading(false);
     fetchFood();
     }, []);
     
@@ -78,8 +83,12 @@ const SearchFoodScreen = ({onAddFoodItem, currentMeal}) => {
                 style={styles.searchInput}
                 
             />
+            
             </View>
-        <FlatList
+
+       
+        
+       <FlatList
             data={filteredFood}
             renderItem={renderItem}
             keyExtractor={item => item.id}
@@ -126,7 +135,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     height: 40,
     width: '90%',
-    fontColor: '#17352b',
+    color: '#17352b',
   },
 
   closeButton: {
