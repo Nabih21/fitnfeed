@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 
+
 const ExercisesScreen = ({onAddExercise}) => {
  
 
@@ -52,6 +53,8 @@ const ExercisesScreen = ({onAddExercise}) => {
             <FontAwesome5 name="search" size={24} color="#ccc" padding={5}/>
             <TextInput
                 placeholder="Search exercises..."
+                placeholderTextColor={'#4B6059'}
+                
                 onChangeText={text => setSearchQuery(text)}
                 value={searchQuery}
                 style={styles.searchInput}
@@ -104,6 +107,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     height: 40,
     width: '90%',
+    fontColor: '#17352b',
   },
 
   closeButton: {

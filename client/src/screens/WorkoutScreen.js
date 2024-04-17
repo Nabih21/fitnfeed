@@ -7,6 +7,8 @@ import HomeScreen from './HomeScreen';
 import Header from '../components/Header';
 import { MaterialIcons } from '@expo/vector-icons';
 import ExercisesScreen from './ExercisesScreen';
+import DatePickerComponent from '../components/DateTimePicker';
+import { Feather } from '@expo/vector-icons';
 //import { FlatList } from 'react-native-gesture-handler';
 
 
@@ -14,6 +16,22 @@ import ExercisesScreen from './ExercisesScreen';
 
 const Body = () => {
     const navigation = useNavigation();
+
+  const [date, setDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
+
+  const handleDateChange = (newDate) => {
+    setSelectedDate(newDate);
+    // Additional actions based on the new date
+  };
+  const adjustDate = (days) => {
+    setSelectedDate((prevDate) => {
+      const newDate = new Date(prevDate);
+      newDate.setDate(newDate.getDate() + days);
+      return newDate;
+    });
+  };
+
 
     const [selectedExercises, setSelectedExercises] = useState([]);
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -121,7 +139,7 @@ const Body = () => {
           />
           <Text style={styles.setText}>reps</Text>
           <TouchableOpacity onPress={() => removeSet(index, setIndex)}>
-            <MaterialIcons name="delete" size={26} color="red" />
+            <MaterialIcons name="delete" size={26} color="#E08080" />
           </TouchableOpacity>
         </View>
       );
@@ -158,7 +176,8 @@ const Body = () => {
        
         <ScrollView contentContainerStyle={styles.layout} style={styles.scrollView}
         >
-            <Text style={styles.textTitle}>My Workout</Text>
+    
+            <DatePickerComponent date={selectedDate} onAdjustDate={adjustDate} onChange={handleDateChange} />
 
             <FlatList 
               data={selectedExercises}
@@ -169,15 +188,19 @@ const Body = () => {
             <TouchableOpacity
               style={[ styles.button, styles.addButton]}
               onPress={() => setIsModalVisible(true)}>
-              <Text style={styles.buttonText}> Add exercise </Text>
+                <Feather name="plus" size={24} color="black" />
+              <Text style={styles.buttonText}>Add exercise </Text>
 
             </TouchableOpacity>
               <View style={styles.buttonContainer}>
               <TouchableOpacity style={[styles.button, styles.discardButton]} onPress={handleDiscardWorkout}>
-                  <Text style={styles.buttonText}>Discard Workout</Text>
+              <Feather name="x" size={18} color="black" style={{margin: 0 }} />
+                  <Text style={styles.buttonText}>Discard</Text>
+          
                 </TouchableOpacity>
                 <TouchableOpacity style={[styles.button, styles.endButton]} onPress={handleEndWorkout}>
-                  <Text style={styles.buttonText}>End Workout</Text>
+                <Feather name="check" size={18} color="black" />
+                  <Text style={styles.buttonText}>Finish</Text>
                 </TouchableOpacity>
                
              </View>
@@ -207,7 +230,7 @@ const WorkoutScreen = () => {
   return (
     <>
     <Header
-    title={`Today ${date}`}
+    title='Fit&Feed'
     />
     <Body />
     </>
@@ -281,14 +304,17 @@ const styles = StyleSheet.create({
       setInput: {
         backgroundColor: '#919090', 
         borderRadius: 8,
-        color: '#ffffff',
+        color: '#17352b',
         marginLeft: 14,
         paddingHorizontal: 8,
         width: 50, // Adjust as needed
+        height: 25,
+        fontSize: 16,
+        fontWeight: '600',
       },
       setText: {
         color: '#ffffff',
-        fontSize: 16,
+        fontSize: 19,
       },
       button: {
         alignItems: 'center',
@@ -315,18 +341,31 @@ const styles = StyleSheet.create({
       },
       addButton: {
        width: 315,
-       backgroundColor: '#a0eec0'
+       backgroundColor: '#a0eec0',
+       flexDirection:'row', 
+        justifyContent: 'center',
+        gap: 8,
+        paddingHorizontal: 0,
       },
       buttonText: {
         color: '#17352b',
         fontWeight: 'bold',
+        fontSize: 16,
       },
       discardButton: {
-        backgroundColor: 'red',
+        //backgroundColor: 'red',
         width: 152.5,
+        flexDirection:'row', 
+        justifyContent: 'center',
+        gap: 8,
+        paddingHorizontal: 0,
       },
       endButton: {
         backgroundColor: '#a0eec0',
         width: 152.5,
+        flexDirection:'row', 
+        justifyContent: 'center',
+        gap: 8,
+        paddingHorizontal: 0,
       }
 })

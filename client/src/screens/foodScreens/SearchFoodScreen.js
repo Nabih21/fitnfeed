@@ -72,6 +72,7 @@ const SearchFoodScreen = ({onAddFoodItem, currentMeal}) => {
             <FontAwesome5 name="search" size={24} color="#ccc" padding={5}/>
             <TextInput
                 placeholder="Search for food..."
+                placeholderTextColor={'#4B6059'}
                 onChangeText={text => setSearchQuery(text)}
                 value={searchQuery}
                 style={styles.searchInput}
@@ -125,6 +126,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     height: 40,
     width: '90%',
+    fontColor: '#17352b',
   },
 
   closeButton: {

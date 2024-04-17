@@ -7,13 +7,28 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import SearchFoodScreen from './SearchFoodScreen';
 import { OverallCaloriesChart, MacroProgressBars } from '../../components/Charts';
-
+import DatePickerComponent from '../../components/DateTimePicker';
+import { MaterialIcons } from '@expo/vector-icons';
 
 
 
 
 const Body = () => {
-  
+  const [date, setDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
+
+  const handleDateChange = (newDate) => {
+    setSelectedDate(newDate);
+    // Additional actions based on the new date
+  };
+  const adjustDate = (days) => {
+    setSelectedDate((prevDate) => {
+      const newDate = new Date(prevDate);
+      newDate.setDate(newDate.getDate() + days);
+      return newDate;
+    });
+  };
+
   const [macrosData, setMacrosData] = useState({
     Carbs: { current: 0, goal: 346 },
     Protein: { current: 0, goal: 200 },
@@ -191,7 +206,14 @@ const Body = () => {
     return (
         <>
             <ScrollView contentContainerStyle={styles.layout} style={styles.scrollView} >
-                <Text style={styles.textTitle} > My Macros </Text>
+                
+              <DatePickerComponent
+                date={selectedDate}
+                onDateChange={handleDateChange}
+                onAdjustDate={adjustDate}
+              />
+                {/* <Text style={styles.textTitle} > My Macros </Text> */}
+
                 <View style={styles.circular} >
                 <OverallCaloriesChart consumed={caloriesData.consumed} goal={caloriesData.goal} />
                    </View>
@@ -228,7 +250,8 @@ const Body = () => {
                 style={styles.removeButton}
                 onPress={() => removeFoodItem(currentMeal[0], index)}
               >
-                <Text style={styles.removeButtonText}>Remove</Text>
+                <MaterialIcons name="delete" size={26} color="#E08080" />
+                {/* <Text style={styles.removeButtonText}>Remove</Text> */}
               </TouchableOpacity>
             </View>
           ))}
@@ -252,7 +275,10 @@ const MacrosScreen =() => {
 
     return (
         <>
-            <Header title="Macros" />
+        <Header title='FitnFeed' />
+            {/* <Header>
+              <DatePickerComponent />
+              </Header> */}
             <Body />
         </>
     );
@@ -383,13 +409,20 @@ const styles = StyleSheet.create({
         backgroundColor: '#a0eec0',
         width: 152.5,
       },
-      
+      modalTitle: {
+
+        color: '#ffffff',
+        fontSize: 24,
+        paddingLeft: 0,
+        fontWeight: 'bold',
+        margin: 10
+      },
 
       
       modalView: {
         marginTop: '50%', // Adjusts the modal to be vertically centered
         alignSelf: 'center', // Centers the modal horizontally in the view
-        backgroundColor: 'white',
+        backgroundColor: '#008877',
         borderRadius: 20,
         padding: 20,
         width: '80%', // Sets a specific width to make it look like a card
@@ -408,13 +441,26 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         width: '100%',
-        marginBottom: 10
+        marginBottom: 10,
+        backgroundColor: '#17352b',
+        borderRadius: 10,
+        padding: 8,
+        marginVertical: 4,
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 7,
+        },
+        shadowOpacity: 0.3,
+        shadowRadius: 4,
+        elevation: 5,
       },
       foodName: {
-        fontSize: 16
+        fontSize: 16,
+        color: 'white'
       },
       removeButton: {
-        backgroundColor: 'red',
+        //backgroundColor: 'red',
         padding: 10,
         borderRadius: 5
       },
@@ -424,13 +470,28 @@ const styles = StyleSheet.create({
       },
       closeButton: {
         marginTop: 20,
-        backgroundColor: '#2196F3',
+        backgroundColor: '#a0eec0',
         padding: 10,
-        borderRadius: 5
+        borderRadius: 8,
+        padding: 6,
+        width: 100,
+        margin: 5,
+        marginBottom: 0,
+        shadowColor: '#000',
+        alignSelf: 'center',
+        shadowOffset: {
+          width: 0,
+          height: 7,
+        },
+        shadowOpacity: 0.3,
+        shadowRadius: 4,
+        elevation: 5,
       },
       closeButtonText: {
-        color: 'white',
-        fontSize: 16
+        color: '#17352b',
+        fontSize: 16,
+        alignSelf: 'center',
+
       },
       overlay: {
         position: 'absolute',
