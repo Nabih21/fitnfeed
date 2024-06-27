@@ -1,13 +1,36 @@
 // BottomTabNavigator.js
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { View, Text, StyleSheet, FlatList, Modal, TouchableOpacity, Pressable, TextInput } from 'react-native';
 import HomeScreen from '../screens/HomeScreen';
+import { useNavigation } from '@react-navigation/native';
 import WorkoutScreen from '../screens/WorkoutScreen';
 import { Entypo, FontAwesome6, MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import MacrosScreen from '../screens/foodScreens/MacrosScreen';
 
 const Tab = createMaterialBottomTabNavigator();
+
+
+function CustomTab({ navigation }){
+  const nav = useNavigation();
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('tabPress', (e) => {
+      // Prevent default behavior
+      e.preventDefault();
+
+      alert('Default behavior prevented');
+      
+
+      // Do something manually
+      // ...
+    });
+     
+
+    return unsubscribe;
+    
+  }, [navigation]);
+  
+}
 
 const BottomTabNavigator = () => {
   return (
@@ -20,19 +43,17 @@ const BottomTabNavigator = () => {
         barStyle={styles.tabBar}
         activeIndicatorStyle={{backgroundColor: '#a0eec0'}}
   >
-      <Tab.Screen name="Home" component={HomeScreen}  options={{ headerShown: false ,
-    tabBarIcon: (focused, color) => (
-    
-      <Entypo name="home" size={24} color='#17352b' />
-    ),
-   
-    
-    }}  />
-      <Tab.Screen name="Workout" component={WorkoutScreen}  options={{ headerShown: false ,
+
+      <Tab.Screen name="Workout" component={CustomTab}  options={{ headerShown: false ,
         tabBarIcon: (color) => (<FontAwesome6 name="dumbbell" size={24} color="#17352b" />)    }}  />
 
       <Tab.Screen name="Macros" component={MacrosScreen} options={{ headerShown: false ,
         tabBarIcon: (color) => (<MaterialCommunityIcons name="food-apple" size={24} color="#17352b" />)    }}  />
+
+      <Tab.Screen name="Home" component={HomeScreen}  options={{ headerShown: false ,
+          tabBarIcon: (focused, color) => (
+              <Entypo name="home" size={24} color='#17352b' />)
+              ,}}  />
 
       <Tab.Screen name="Profile" component={MacrosScreen} options={{ headerShown: false ,
         tabBarIcon: (color) => (<Ionicons name="person" size={24} color="#17352b" />)    }}  />
